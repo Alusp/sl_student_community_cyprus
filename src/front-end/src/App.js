@@ -2,6 +2,7 @@ import "./App.css";
 import { getAllStudents } from "./client";
 import { Component } from "react";
 import Container from "./container.js";
+import Footer from "./Footer.js";
 import { Table, Avatar, Spin } from "antd";
 import { LoadingOutlined} from '@ant-design/icons';
 //<Icon type ="loading" style={{ fontSize:24}}/>Icon
@@ -83,6 +84,7 @@ class App extends Component {
       return (
         <Container>
           <Table dataSource={students} columns={columns} pagination={false} rowKey="studentId" />
+          <Footer numberOfStudents={students.length}></Footer>
         </Container>
       );
     }
