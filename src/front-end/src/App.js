@@ -1,7 +1,8 @@
 import "./App.css";
 import { getAllStudents } from "./client";
 import { Component } from "react";
-import { Table } from 'antd';
+import Container from "./container.js";
+import { Table } from "antd";
 
 class App extends Component {
   state = {
@@ -16,49 +17,49 @@ class App extends Component {
     getAllStudents().then((res) =>
       res.json().then((students) => {
         console.log(students);
-         this.setState({
-          students
-         });
+        this.setState({
+          students,
+        });
       })
     );
   };
 
   render() {
-  
     const { students } = this.state;
-    if(students && students.length){
-   
+    if (students && students.length) {
       const columns = [
         {
-          title: 'student Id',
-          dataIndex: 'studentId',
-          key: 'studentId'
+          title: "student Id",
+          dataIndex: "studentId",
+          key: "studentId",
         },
         {
-          title: 'First Name',
-          dataIndex: 'firstName',
-          key: 'firstName'
+          title: "First Name",
+          dataIndex: "firstName",
+          key: "firstName",
         },
         {
-          title: 'Last Name',
-          dataIndex: 'lastName',
-          key: 'lastName'
+          title: "Last Name",
+          dataIndex: "lastName",
+          key: "lastName",
         },
         {
-          title: 'Email',
-          dataIndex: 'email',
-          key: 'email'
+          title: "Email",
+          dataIndex: "email",
+          key: "email",
         },
         {
-          title: 'Gender',
-          dataIndex: 'gender',
-          key: 'gender'
-        }
-
+          title: "Gender",
+          dataIndex: "gender",
+          key: "gender",
+        },
       ];
 
-      return <Table dataSource={students} columns = {columns} rowKey='studentId'/>
-
+      return (
+        <Container>
+          <Table dataSource={students} columns={columns} pagination={false} rowKey="studentId" />
+        </Container>
+      );
     }
     return <h1> No Students found</h1>;
   }
