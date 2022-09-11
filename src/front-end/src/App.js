@@ -3,20 +3,22 @@ import { getAllStudents } from "./client";
 import { Component } from "react";
 import Container from "./container.js";
 import Footer from "./Footer.js";
-import { Table, Avatar, Spin } from "antd";
+import { Table, Avatar, Spin, Modal } from "antd";
 import { LoadingOutlined} from '@ant-design/icons';
 //<Icon type ="loading" style={{ fontSize:24}}/>Icon
 const getIndicatorIcon = () => <LoadingOutlined type="loading" style={{fontSize: 24}} spin />
 class App extends Component {
   state = {
     students: [],
-    isFetching: false
+    isFetching: false,
+    isAddModalVisible: false
   };
 
   componentDidMount() {
     this.fetchStudents();
   }
-
+  openAddModalVisible = () => this.setState({isAddModalVisible: true})
+  closeAddModalVisible = () => this.setState({isAddModalVisible: false})
   fetchStudents = () => {
     this.setState({
       isFetching: true
@@ -34,7 +36,7 @@ class App extends Component {
 
   render() {
     
-    const { students, isFetching } = this.state;
+    const { students, isFetching, isAddModalVisible } = this.state;
 
     if(isFetching){
       return (
@@ -84,7 +86,17 @@ class App extends Component {
       return (
         <Container>
           <Table dataSource={students} columns={columns} pagination={false} rowKey="studentId" />
-          <Footer numberOfStudents={students.length}></Footer>
+          <Modal 
+          title='Add new student'
+          visible={isAddModalVisible}
+          onOk={this.closeAddModalVisible}
+          onCancel={this.closeAddModalVisible}
+          width={1000}>
+          <h1>Hello Modal with ANT D</h1>
+          </Modal>
+          <Footer numberOfStudents={students.length}
+            handleAddStudentClickEvent = {this.openAddModalVisible}
+          /> 
         </Container>
       );
     }
